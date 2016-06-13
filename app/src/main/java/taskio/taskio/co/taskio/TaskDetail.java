@@ -3,22 +3,16 @@ package taskio.taskio.co.taskio;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import taskio.taskio.co.taskio.controller.TaskListController;
 import taskio.taskio.co.taskio.model.TaskListModel;
@@ -99,11 +93,9 @@ public class TaskDetail extends AppCompatActivity {
     public void onUpdateTask(View v) {
         // get new data
         String title = detail_txttitle.getText().toString();
-        String descr = detail_txtdescr.getText().toString();
-
 
         TaskListModel taskListModel = new TaskListModel(this);
-        TaskListController taskListController = new TaskListController(task_id, title, descr);
+        TaskListController taskListController = new TaskListController(task_id, title);
         taskListModel.updateTask(taskListController);
         Snackbar.make(v, "Task has been updated ", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
         setResult(MainActivity.EDIT_TASK_OK);
@@ -111,7 +103,7 @@ public class TaskDetail extends AppCompatActivity {
 
     public void deleteTask() {
         TaskListModel taskListModel = new TaskListModel(this);
-        TaskListController taskListController = new TaskListController(getIntent().getIntExtra(MainActivity.TASK_ID_PUT, -1), "", "");
+        TaskListController taskListController = new TaskListController(getIntent().getIntExtra(MainActivity.TASK_ID_PUT, -1), "");
         taskListModel.deleteTask(taskListController);
         setResult(MainActivity.EDIT_TASK_OK);
         finish();
@@ -119,7 +111,7 @@ public class TaskDetail extends AppCompatActivity {
 
     public void taskComplete() {
         TaskListModel model = new TaskListModel(this);
-        TaskListController taskListController = new TaskListController(getIntent().getIntExtra(MainActivity.TASK_ID_PUT, -1), "", "");
+        TaskListController taskListController = new TaskListController(getIntent().getIntExtra(MainActivity.TASK_ID_PUT, -1), "");
         model.taskCompleted(taskListController);
         setResult(MainActivity.EDIT_TASK_OK);
         finish();
@@ -127,7 +119,7 @@ public class TaskDetail extends AppCompatActivity {
 
     public void redoCompletedTask() {
         TaskListModel model = new TaskListModel(this);
-        TaskListController taskListController = new TaskListController(getIntent().getIntExtra(MainActivity.TASK_ID_PUT, -1), "", "");
+        TaskListController taskListController = new TaskListController(getIntent().getIntExtra(MainActivity.TASK_ID_PUT, -1), "");
         model.redoCompletedTask(taskListController);
         setResult(MainActivity.EDIT_TASK_OK);
     }
@@ -182,4 +174,7 @@ public class TaskDetail extends AppCompatActivity {
         alertDialog.show();
 
     }
+
+
+
 }
