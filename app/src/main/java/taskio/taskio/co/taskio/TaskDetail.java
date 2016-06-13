@@ -9,11 +9,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.List;
+
+import taskio.taskio.co.taskio.controller.MilestoneController;
 import taskio.taskio.co.taskio.controller.TaskListController;
 import taskio.taskio.co.taskio.model.TaskListModel;
 
@@ -24,6 +28,7 @@ public class TaskDetail extends AppCompatActivity {
     private static int task_id;
     private static int task_completed;
     private Menu menu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +48,7 @@ public class TaskDetail extends AppCompatActivity {
 
         Intent intent = getIntent();
         task_id = intent.getIntExtra(MainActivity.TASK_ID_PUT, -1);
-        task_completed = intent.getIntExtra(MainActivity.TASK_COMPLETED_OR_NOT_PUT,-1);
+        task_completed = intent.getIntExtra(MainActivity.TASK_COMPLETED_OR_NOT_PUT, -1);
         String title = intent.getStringExtra(MainActivity.TASK_TITLE_PUT);
         String descr = intent.getStringExtra(MainActivity.TASK_DESCR_PUT);
 
@@ -56,6 +61,13 @@ public class TaskDetail extends AppCompatActivity {
         detail_txttitle.setText(title);
         detail_txtdescr.setText(descr);
 
+        TaskListModel taskListModel = new TaskListModel(this);
+
+        List<MilestoneController> lls = taskListModel.getAllMilestone(new MilestoneController(0, "", 0, 1));
+        for (MilestoneController ls : lls) {
+            Log.d("TEST => ",ls._mileStone);
+        }
+
     }
 
 
@@ -65,7 +77,7 @@ public class TaskDetail extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.task_detail_menu, menu);
         MenuItem item = (MenuItem) findViewById(R.id.completed_task_menu_option);
 
-        if (task_completed == 1){
+        if (task_completed == 1) {
             this.menu = menu;
             menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_action_redo));
         }
@@ -147,18 +159,18 @@ public class TaskDetail extends AppCompatActivity {
     public void onCompleteTask() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        if (task_completed == 1){
+        if (task_completed == 1) {
             builder.setMessage("Do you want to redo this task ?");
-        }else{
+        } else {
             builder.setMessage("Hey, You finished this task yea ?");
         }
 
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (task_completed == 1){
+                if (task_completed == 1) {
                     redoCompletedTask();
-                }else{
+                } else {
                     taskComplete();
                 }
             }
@@ -174,7 +186,6 @@ public class TaskDetail extends AppCompatActivity {
         alertDialog.show();
 
     }
-
 
 
 }

@@ -85,7 +85,7 @@ public class TaskListModel extends SQLiteOpenHelper {
 
     public boolean updateTask(TaskListController taskListController) { // change to sql helper method "update() later"
 
-        String query = "UPDATE " + DbContract.TaskListTable.TABLE_NAME + " SET " + DbContract.TaskListTable.TASK_TITLE_COL + " = ? , " +
+        String query = "UPDATE " + DbContract.TaskListTable.TABLE_NAME + " SET " + DbContract.TaskListTable.TASK_TITLE_COL + " = ? " +
                 " WHERE " + DbContract.TaskListTable.TASK_ID_COL + " = ? ";
 
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
@@ -141,6 +141,40 @@ public class TaskListModel extends SQLiteOpenHelper {
         values.put(DbContract.TaskMilestoneTable.TASK_ID_COL, milestoneController.get_task_id());
 
         sqLiteDatabase.insert(DbContract.TaskMilestoneTable.TABLE_NAME, null, values);
+    }
+
+    public List<MilestoneController> getAllMilestone(MilestoneController milestoneController) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        List<MilestoneController> getTaskMileStones = new ArrayList<MilestoneController>();
+
+        String[] cols = {DbContract.TaskMilestoneTable.TASK_ID_COL, DbContract.TaskMilestoneTable.TASK_MILESTONE_COL, DbContract.TaskMilestoneTable.TASK_MILESTONE_COMPLETED, DbContract.TaskMilestoneTable.TASK_MILESTONE_ID_COL};
+        String[] arr = {"" + milestoneController.get_task_id()};
+
+        Cursor cur = sqLiteDatabase.query(DbContract.TaskMilestoneTable.TABLE_NAME, cols, "task_id = ?", arr, null, null, null);
+        if (cur.moveToFirst()) {
+            do {
+                getTaskMileStones.add(new MilestoneController(cur.getInt(0), cur.getString(1), cur.getInt(2), cur.getLong(3)));
+            } while (cur.moveToNext());
+        }
+
+        return getTaskMileStones;
+    }
+
+    public List<MilestoneController> getCompletedMilestones(MilestoneController milestoneController) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        List<MilestoneController> getCompletedTaskMileStones = new ArrayList<MilestoneController>();
+
+        String[] cols = {DbContract.TaskMilestoneTable.TASK_ID_COL, DbContract.TaskMilestoneTable.TASK_MILESTONE_COL, DbContract.TaskMilestoneTable.TASK_MILESTONE_COMPLETED, DbContract.TaskMilestoneTable.TASK_MILESTONE_ID_COL};
+        String[] arr = {"" + milestoneController.get_task_id(), "1"};
+
+        Cursor cur = sqLiteDatabase.query(DbContract.TaskMilestoneTable.TABLE_NAME, cols, "task_id = ? AND task_milestone_completed = ?", arr, null, null, null);
+        if (cur.moveToFirst()) {
+            do {
+                getCompletedTaskMileStones.add(new MilestoneController(cur.getInt(0), cur.getString(1), cur.getInt(2), cur.getLong(3)));
+            } while (cur.moveToNext());
+        }
+
+        return getCompletedTaskMileStones;
     }
 
 }
