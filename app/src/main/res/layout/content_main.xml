@@ -14,38 +14,43 @@
 
     <LinearLayout
         android:id="@+id/notasksyet"
-        android:onClick="onAddNewTask"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:onClick="onAddNewTask"
+
+        android:orientation="vertical">
 
 
-        <ImageButton
-            android:onClick="onAddNewTask"
-            android:background="@null"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_add"/>
 
         <TextView
             android:id="@+id/taphere"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="No Tasks Yet! Tap here to add a task" />
+            android:text="Welcome To Task.Io" />
+
+        <TextView
+            android:id="@+id/taphere2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Tap plus button to add your first task" />
+
+        <android.support.design.widget.FloatingActionButton android:id="@+id/fab2"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+             android:layout_margin="@dimen/fab_margin" android:onClick="onAddNewTask"  android:layout_gravity="center"
+            android:src="@drawable/ic_add_white" />
 
     </LinearLayout>
 
     <ListView
-        android:visibility="invisible"
         android:id="@+id/tasksListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="3dp"
         android:drawSelectorOnTop="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:visibility="invisible"></ListView>
 
 </RelativeLayout>

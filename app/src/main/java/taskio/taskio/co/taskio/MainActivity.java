@@ -2,6 +2,7 @@ package taskio.taskio.co.taskio;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, TaskDetail.class);
                 intent.putExtra(TASK_ID_PUT, item.get_taskId());
                 intent.putExtra(TASK_TITLE_PUT, item.get_taskTitle());
-                intent.putExtra(TASK_DESCR_PUT, item.get_taskDescr());
                 intent.putExtra(TASK_COMPLETED_OR_NOT_PUT, item.get_completed());
                 startActivityForResult(intent, EDIT_TASK_OK);
             }
@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         taskListView.setVisibility(View.VISIBLE);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBar);
+        appBarLayout.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,14 +92,10 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.notasksyet);
         linearLayout.setVisibility(View.VISIBLE);
         taskListView.setVisibility(View.INVISIBLE);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBar);
+        appBarLayout.setVisibility(View.INVISIBLE);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.INVISIBLE);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onAddNewTask(view);
-            }
-        });
     }
 
     private void dataChanged() {

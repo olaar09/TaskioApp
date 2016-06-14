@@ -44,7 +44,7 @@ public class AddTaskActivity extends AppCompatActivity {
         formList.add(editTextMilestone.getId());
 
         editTextTitle.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-        editTextMilestone.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+        editTextMilestone.getBackground().mutate().setColorFilter(getResources().getColor(R.color.gray), PorterDuff.Mode.SRC_ATOP);
 
         editTextMilestone.setOnFocusChangeListener(myEditTextFocus);
 
@@ -114,7 +114,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         if (title.isEmpty() || !isFormOk) { // more checks later
 
-            Snackbar.make(v, "Please enter task name and milestones  first", Snackbar.LENGTH_LONG)
+            Snackbar.make(v, "Please enter task name and Todos first", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
         } else {
@@ -153,10 +153,11 @@ public class AddTaskActivity extends AppCompatActivity {
         EditText et = new EditText(AddTaskActivity.this);
         LinearLayout.LayoutParams editLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         editLayoutParams.setMargins(0, 30, 0, 0);
-        et.setHint("Add milestone");
+        et.setHint("Add Todo");
         et.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
         et.setLayoutParams(editLayoutParams);
         et.setId(eid);
+        et.getBackground().mutate().setColorFilter(getResources().getColor(R.color.gray), PorterDuff.Mode.SRC_ATOP);
         et.setOnFocusChangeListener(myEditTextFocus);
         relativeLayout.addView(et);
 

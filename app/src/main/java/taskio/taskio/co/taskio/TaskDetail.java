@@ -8,23 +8,28 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
+import taskio.taskio.co.taskio.adapter.MilestoneListAdapter;
 import taskio.taskio.co.taskio.controller.MilestoneController;
 import taskio.taskio.co.taskio.controller.TaskListController;
 import taskio.taskio.co.taskio.model.TaskListModel;
 
 public class TaskDetail extends AppCompatActivity {
 
-    private EditText detail_txttitle;
-    private EditText detail_txtdescr;
+    private TextView detail_txttitle;
+    private ListView milestoneListview;
     private static int task_id;
     private static int task_completed;
     private Menu menu;
@@ -36,13 +41,13 @@ public class TaskDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onUpdateTask(view);
             }
-        });
+        });*/
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -50,23 +55,29 @@ public class TaskDetail extends AppCompatActivity {
         task_id = intent.getIntExtra(MainActivity.TASK_ID_PUT, -1);
         task_completed = intent.getIntExtra(MainActivity.TASK_COMPLETED_OR_NOT_PUT, -1);
         String title = intent.getStringExtra(MainActivity.TASK_TITLE_PUT);
-        String descr = intent.getStringExtra(MainActivity.TASK_DESCR_PUT);
+        detail_txttitle = (TextView) findViewById(R.id.detail_task_title);
 
-        detail_txttitle = (EditText) findViewById(R.id.detail_task_title);
-        detail_txtdescr = (EditText) findViewById(R.id.detail_task_descr);
-
-        detail_txttitle.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-        detail_txtdescr.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+        //detail_txtdescr.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
 
         detail_txttitle.setText(title);
-        detail_txtdescr.setText(descr);
 
+
+        milestoneListview = (ListView) findViewById(R.id.milestonelistview);
         TaskListModel taskListModel = new TaskListModel(this);
+        final List<MilestoneController> getAllMilestones = taskListModel.getAllMilestone(new MilestoneController(0, "", 0, task_id));
+        milestoneListview.setAdapter(new MilestoneListAdapter(TaskDetail.this, getAllMilestones));
+        milestoneListview.setItemsCanFocus(true);
+        milestoneListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MilestoneController item = getAllMilestones.get(position);
+                Log.d("Testonclick => ", ""+ item._task_id);
+            }
+        });
 
-        List<MilestoneController> lls = taskListModel.getAllMilestone(new MilestoneController(0, "", 0, 1));
-        for (MilestoneController ls : lls) {
+        /*for (MilestoneController ls : lls) {
             Log.d("TEST => ",ls._mileStone);
-        }
+        }*/
 
     }
 

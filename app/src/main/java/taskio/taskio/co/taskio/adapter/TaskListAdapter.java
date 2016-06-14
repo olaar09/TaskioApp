@@ -55,10 +55,10 @@ public class TaskListAdapter extends ArrayAdapter<TaskListController> {
 
         TaskListModel taskListModel = new TaskListModel(context);
         List<MilestoneController> milestoneList  = taskListModel.getAllMilestone(new MilestoneController(0, "", 0, taskListController.get_taskId()));
-        List<MilestoneController> completeMilestone = taskListModel.getCompletedMilestones(new MilestoneController(0, "", 0, taskListController.get_taskId()));
+        List<MilestoneController> completedMilestone = taskListModel.getCompletedMilestones(new MilestoneController(0, "", 0, taskListController.get_taskId()));
 
         viewHolder.title.setText(taskListController.get_taskTitle());
-        viewHolder.descr.setText(milestoneList.size() + " Milestones, "+ completeMilestone.size()+" Completed");
+        viewHolder.descr.setText(milestoneList.size() + " Todos, "+ completedMilestone.size()+" Completed");
 
 
         if (taskListController.get_completed() == 1){
