@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,6 +31,9 @@ public class TaskDetail extends AppCompatActivity {
 
     private TextView detail_txttitle;
     private ListView milestoneListview;
+    private List<MilestoneController> getAllMilestones;
+    private ArrayAdapter adapter;
+    private TaskListModel taskListModel;
     private static int task_id;
     private static int task_completed;
     private Menu menu;
@@ -63,15 +67,16 @@ public class TaskDetail extends AppCompatActivity {
 
 
         milestoneListview = (ListView) findViewById(R.id.milestonelistview);
-        TaskListModel taskListModel = new TaskListModel(this);
-        final List<MilestoneController> getAllMilestones = taskListModel.getAllMilestone(new MilestoneController(0, "", 0, task_id));
-        milestoneListview.setAdapter(new MilestoneListAdapter(TaskDetail.this, getAllMilestones));
+        taskListModel = new TaskListModel(this);
+        getAllMilestones = taskListModel.getAllMilestone(new MilestoneController(0, "", 0, task_id));
+        adapter = new MilestoneListAdapter(TaskDetail.this, getAllMilestones,task_id,task_completed);
+        milestoneListview.setAdapter(adapter);
         milestoneListview.setItemsCanFocus(true);
         milestoneListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MilestoneController item = getAllMilestones.get(position);
-                Log.d("Testonclick => ", ""+ item._task_id);
+                Log.d("Testonclick => ", "" + item._task_id + " pos->" + position);
             }
         });
 
@@ -140,11 +145,21 @@ public class TaskDetail extends AppCompatActivity {
         finish();
     }
 
+    private void dataChanged() {
+        getAllMilestones.clear();
+        getAllMilestones.addAll(taskListModel.getAllMilestone(new MilestoneController(0, "", 0, task_id)));
+        adapter.notifyDataSetChanged();
+
+        task_completed = 0;
+        menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_done_all));
+    }
+
     public void redoCompletedTask() {
         TaskListModel model = new TaskListModel(this);
         TaskListController taskListController = new TaskListController(getIntent().getIntExtra(MainActivity.TASK_ID_PUT, -1), "");
         model.redoCompletedTask(taskListController);
         setResult(MainActivity.EDIT_TASK_OK);
+        dataChanged();
     }
 
     public void onDeleteTask() {

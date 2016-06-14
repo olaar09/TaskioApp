@@ -62,8 +62,18 @@ public class TaskListModel extends SQLiteOpenHelper {
         return returnRow;
     }
 
-    public List<TaskListController> getTask() {
+    public List<TaskListController> getTask(TaskListController taskListController) {
         List<TaskListController> task = new ArrayList<TaskListController>();
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        String[] cols = {DbContract.TaskListTable.TASK_ID_COL, DbContract.TaskListTable.TASK_TITLE_COL, DbContract.TaskListTable.TASK_COMPLETED_COL};
+        String[] arr = {"" + taskListController.get_taskId()};
+
+        Cursor cur = sqLiteDatabase.query(DbContract.TaskListTable.TABLE_NAME, cols, "task_id = ?", arr, null, null, null);
+
+        if (cur.moveToFirst()) {
+            task.add(new TaskListController(cur.getInt(0), cur.getString(1), cur.getInt(2)));
+        }
 
         return task;
     }
@@ -102,6 +112,9 @@ public class TaskListModel extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         String[] arg = {"" + taskListController.get_taskId()};
         sqLiteDatabase.delete(DbContract.TaskListTable.TABLE_NAME, " task_id = ? ", arg);
+
+        //
+        sqLiteDatabase.delete(DbContract.TaskMilestoneTable.TABLE_NAME, " task_id = ? ", arg);
         return true;
     }
 
@@ -110,25 +123,44 @@ public class TaskListModel extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         // update tasklist table
-        values.put(DbContract.TaskListTable.TASK_NO_MILESTONE_COL, 1);
+        values.put(DbContract.TaskListTable.TASK_COMPLETED_COL, 1);
         String[] arg = {"" + taskListController.get_taskId()};
         sqLiteDatabase.update(DbContract.TaskListTable.TABLE_NAME, values, "task_id = ? ", arg);
 
+
         // update milestone table
+
+        sqLiteDatabase.update(DbContract.TaskMilestoneTable.TABLE_NAME, values, "task_id = ? ", arg);
 
         return true;
     }
+
+    public boolean mileStoneCompleted(int id, int completeOrNot) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DbContract.TaskMilestoneTable.TASK_MILESTONE_COMPLETED, completeOrNot);
+        String[] arg = {"" + id};
+        sqLiteDatabase.update(DbContract.TaskMilestoneTable.TABLE_NAME, values, "task_milestone_id = ?", arg);
+
+
+        return true;
+    }
+
 
     public boolean redoCompletedTask(TaskListController taskListController) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        // update tasklist table
-        values.put(DbContract.TaskListTable.TASK_NO_MILESTONE_COL, 0);
+
+        values.put(DbContract.TaskListTable.TASK_COMPLETED_COL, 0);
         String[] arg = {"" + taskListController.get_taskId()};
         sqLiteDatabase.update(DbContract.TaskListTable.TABLE_NAME, values, "task_id = ? ", arg);
 
+
         // update milestone table
+
+        sqLiteDatabase.update(DbContract.TaskMilestoneTable.TABLE_NAME, values, "task_id = ? ", arg);
 
         return true;
     }
@@ -147,13 +179,16 @@ public class TaskListModel extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         List<MilestoneController> getTaskMileStones = new ArrayList<MilestoneController>();
 
-        String[] cols = {DbContract.TaskMilestoneTable.TASK_ID_COL, DbContract.TaskMilestoneTable.TASK_MILESTONE_COL, DbContract.TaskMilestoneTable.TASK_MILESTONE_COMPLETED, DbContract.TaskMilestoneTable.TASK_MILESTONE_ID_COL};
+        String[] cols = {DbContract.TaskMilestoneTable.TASK_MILESTONE_ID_COL, DbContract.TaskMilestoneTable.TASK_ID_COL, DbContract.TaskMilestoneTable.TASK_MILESTONE_COL, DbContract.TaskMilestoneTable.TASK_MILESTONE_COMPLETED};
         String[] arr = {"" + milestoneController.get_task_id()};
+
+
 
         Cursor cur = sqLiteDatabase.query(DbContract.TaskMilestoneTable.TABLE_NAME, cols, "task_id = ?", arr, null, null, null);
         if (cur.moveToFirst()) {
             do {
-                getTaskMileStones.add(new MilestoneController(cur.getInt(0), cur.getString(1), cur.getInt(2), cur.getLong(3)));
+                Log.d("hhh =>","" + cur.getInt(0));
+                getTaskMileStones.add(new MilestoneController(cur.getInt(0), cur.getString(2), cur.getInt(3), cur.getLong(1)));
             } while (cur.moveToNext());
         }
 

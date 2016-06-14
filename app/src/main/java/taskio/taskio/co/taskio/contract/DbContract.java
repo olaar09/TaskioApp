@@ -14,13 +14,13 @@ public class DbContract {
         public static final String TABLE_NAME = "tasklist";
         public static final String TASK_ID_COL = "task_id";
         public static final String TASK_TITLE_COL = "task_title";
-        public static final String TASK_COMPLETED_COL = "task_completed";
+        public static final String TASK_COMPLETED_COL = "task_milestone_completed";
         public static final String TASK_NO_MILESTONE_COL = "task_no_milestone";
         public static final String TASK_DESCRIPTION_COL = "task_descr";
 
         public String getCreateTableQuery() {
             String query = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,%s TEXT, %s INTEGER DEFAULT 0,  %s DATETIME DEFAULT CURRENT_TIMESTAMP)",
-                    TABLE_NAME, TASK_ID_COL, TASK_TITLE_COL, TASK_NO_MILESTONE_COL, DbContract.UPDATED_AT);
+                    TABLE_NAME, TASK_ID_COL, TASK_TITLE_COL, TASK_COMPLETED_COL, DbContract.UPDATED_AT);
             return query;
         }
 
