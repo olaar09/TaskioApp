@@ -182,8 +182,6 @@ public class TaskListModel extends SQLiteOpenHelper {
         String[] cols = {DbContract.TaskMilestoneTable.TASK_MILESTONE_ID_COL, DbContract.TaskMilestoneTable.TASK_ID_COL, DbContract.TaskMilestoneTable.TASK_MILESTONE_COL, DbContract.TaskMilestoneTable.TASK_MILESTONE_COMPLETED};
         String[] arr = {"" + milestoneController.get_task_id()};
 
-
-
         Cursor cur = sqLiteDatabase.query(DbContract.TaskMilestoneTable.TABLE_NAME, cols, "task_id = ?", arr, null, null, null);
         if (cur.moveToFirst()) {
             do {
