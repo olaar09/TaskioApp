@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".TaskDetail">
 
     <item android:icon="@drawable/ic_add_white"
-        android:title="Edit task"
+        android:title="Add task"
         app:showAsAction="ifRoom"
         android:orderInCategory="99"
         android:id="@+id/add_todo_menu_option">
@@ -19,7 +19,7 @@
     </item>
 
     <item android:icon="@drawable/ic_done_all"
-        android:title="Edit task"
+        android:title="Completed"
         app:showAsAction="ifRoom"
         android:orderInCategory="100"
         android:id="@+id/completed_task_menu_option">

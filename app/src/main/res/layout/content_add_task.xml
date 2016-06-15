@@ -39,8 +39,8 @@
         android:layout_marginBottom="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="10dp"
-        android:text="Todos"
-        android:layout_marginTop="30dp" />
+        android:text="Task Todos"
+        android:layout_marginTop="40dp" />
 
     <ScrollView
         android:layout_width="match_parent"

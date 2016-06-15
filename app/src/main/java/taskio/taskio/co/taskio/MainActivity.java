@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(TASK_ID_PUT, item.get_taskId());
                 intent.putExtra(TASK_TITLE_PUT, item.get_taskTitle());
                 intent.putExtra(TASK_COMPLETED_OR_NOT_PUT, item.get_completed());
+
                 startActivityForResult(intent, EDIT_TASK_OK);
             }
         });

@@ -5,17 +5,33 @@
     android:layout_height="match_parent">
 
 
-    <EditText
-        android:id="@+id/edit_milestone_input"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"/>
+        android:layout_height="500dp"
+        android:padding="20dp"
+        android:background="@color/whitecolor">
 
-    <ImageButton
-        android:id="@+id/on_do_edit_milestone"
-        android:layout_width="wrap_content"
-        android:layout_alignRight="@id/edit_milestone_input"
-        android:src="@drawable/ic_check"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/img"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/ic_action_edit"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/welcome_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="30dp"
+            android:text="Hey, glad you made it here. This feature will be available in the next update. Stay tuned"/>
+
+
+
+    </RelativeLayout>
+
+
+
 
 </RelativeLayout>

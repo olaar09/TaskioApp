@@ -28,9 +28,24 @@
             <TextView
                 android:id="@+id/detail_task_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginTop="10dp"
                 android:textSize="40dp" />
+
+            <TextView
+                android:layout_below="@id/detail_task_title"
+                android:id="@+id/metrics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/gotonotes"
+                android:text="Notes"
+                android:layout_alignRight="@id/detail_task_title"
+                android:layout_marginTop="15dp"
+                android:onClick="onComingSoonFeatureView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 

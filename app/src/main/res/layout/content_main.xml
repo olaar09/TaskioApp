@@ -19,9 +19,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
         android:onClick="onAddNewTask"
-
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:padding="15dp">
 
 
         <TextView
@@ -29,18 +28,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Welcome To Task.Io" />
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="Hi Pal, i'm Task.Io" />
 
         <TextView
             android:id="@+id/taphere2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:singleLine="true"
+            android:text="I'll help you organize your tasks" />
+
+        <TextView
+            android:id="@+id/taphere3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Tap plus button to add your first task" />
 
-        <android.support.design.widget.FloatingActionButton android:id="@+id/fab2"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-             android:layout_margin="@dimen/fab_margin" android:onClick="onAddNewTask"  android:layout_gravity="center"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/fab_margin"
+            android:onClick="onAddNewTask"
             android:src="@drawable/ic_add_white" />
 
     </LinearLayout>

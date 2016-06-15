@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:id="@+id/textelements"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:background="@color/whitecolor"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
+            android:layout_height="160dp"
+            android:paddingTop="10dp"
             android:paddingEnd="15dp"
             android:paddingLeft="15dp"
             android:paddingStart="15dp">
@@ -23,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:textColor="@color/textColor"
-                android:textSize="30sp">
+                android:textSize="25sp">
             </TextView>
 
             <TextView
@@ -31,6 +32,7 @@
                 android:id="@+id/task_descr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:textColor="@color/faintText"

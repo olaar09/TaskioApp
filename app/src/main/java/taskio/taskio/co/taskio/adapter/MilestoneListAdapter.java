@@ -39,14 +39,16 @@ public class MilestoneListAdapter extends ArrayAdapter<MilestoneController> {
     private static int taskCompleted;
     private static TaskListModel taskListModel;
     private CheckBox longPressCheckBox;
+    private TaskDetail.TaskDetailInnerClass k;
 
 
-    public MilestoneListAdapter(Context c, List<MilestoneController> milestoneList, int taskId, int taskCompleted) {
+    public MilestoneListAdapter(Context c, List<MilestoneController> milestoneList, int taskId, int taskCompleted, TaskDetail.TaskDetailInnerClass k) {
         super(c, 0, milestoneList);
         this.context = c;
         this.taskId = taskId;
         this.taskCompleted = taskCompleted;
         taskListModel = new TaskListModel(context);
+        this.k = k;
     }
 
     public class ViewHolder {
@@ -122,8 +124,9 @@ public class MilestoneListAdapter extends ArrayAdapter<MilestoneController> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         taskListModel.deleteMileStone(new MilestoneController((int)longPressCheckBox.getTag(),"",0,0));
+                        k.updateMilestoneList();
 
-                         Log.d("Inside =>", "" + longPressCheckBox.getTag())   ;
+                        Log.d("Inside =>", "" + longPressCheckBox.getTag())   ;
                     }
                 });
 

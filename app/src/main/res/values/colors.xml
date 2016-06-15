@@ -7,4 +7,5 @@
     <color name="textColor">#2A2728</color>
     <color name="whitecolor">#fff</color>
     <color name="gray">#f5f5f5</color>
+    <color name="bg">#f55</color>
 </resources>

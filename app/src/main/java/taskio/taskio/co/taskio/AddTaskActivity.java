@@ -1,5 +1,7 @@
 package taskio.taskio.co.taskio;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import java.util.List;
 
 import taskio.taskio.co.taskio.controller.MilestoneController;
 import taskio.taskio.co.taskio.controller.TaskListController;
+import taskio.taskio.co.taskio.fragment.EditMileStoneDialogFragment;
 import taskio.taskio.co.taskio.model.TaskListModel;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -85,6 +88,9 @@ public class AddTaskActivity extends AppCompatActivity {
 
         if (id == R.id.reminder_task_menu_option) {
             // onCompleteTask();
+        }
+        if (id ==R.id.reminder_task_menu_option){
+            onComingSoonFeature();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -197,4 +203,12 @@ public class AddTaskActivity extends AppCompatActivity {
 
         ;
     };
+
+    public void  onComingSoonFeature(){
+        FragmentManager manager = getFragmentManager();
+        Fragment frag = manager.findFragmentByTag("fragment_edit_name");
+        //  manager.beginTransaction().remove(frag).commit();
+        EditMileStoneDialogFragment mileStoneDialogFragment = new EditMileStoneDialogFragment();
+        mileStoneDialogFragment.show(manager, "fragment_edit_name");
+    }
 }

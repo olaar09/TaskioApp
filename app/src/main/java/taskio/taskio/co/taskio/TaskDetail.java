@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,12 +35,12 @@ public class TaskDetail extends AppCompatActivity {
 
     private TextView detail_txttitle;
     private ListView milestoneListview;
-    private List<MilestoneController> getAllMilestones;
-    private ArrayAdapter adapter;
-    private TaskListModel taskListModel;
+    private static List<MilestoneController> getAllMilestones;
+    private static ArrayAdapter adapter;
+    private static TaskListModel taskListModel;
     private static int task_id;
     private static int task_completed;
-    private Menu menu;
+    private static Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +49,6 @@ public class TaskDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onUpdateTask(view);
-            }
-        });*/
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -72,20 +66,30 @@ public class TaskDetail extends AppCompatActivity {
         milestoneListview = (ListView) findViewById(R.id.milestonelistview);
         taskListModel = new TaskListModel(this);
         getAllMilestones = taskListModel.getAllMilestone(new MilestoneController(0, "", 0, task_id));
-        adapter = new MilestoneListAdapter(TaskDetail.this, getAllMilestones, task_id, task_completed);
+        adapter = new MilestoneListAdapter(TaskDetail.this, getAllMilestones, task_id, task_completed, new TaskDetailInnerClass());
         milestoneListview.setAdapter(adapter);
         milestoneListview.setItemsCanFocus(true);
         milestoneListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MilestoneController item = getAllMilestones.get(position);
-               // Log.d("Testonclick => ", "" + item._task_id + " pos->" + position);
+                // Log.d("Testonclick => ", "" + item._task_id + " pos->" + position);
             }
         });
 
-        /*for (MilestoneController ls : lls) {
-            Log.d("TEST => ",ls._mileStone);
-        }*/
+        // metrics
+        List<MilestoneController> milestoneList = taskListModel.getAllMilestone(new MilestoneController(0, "", 0, task_id));
+        List<MilestoneController> completedMilestone = taskListModel.getCompletedMilestones(new MilestoneController(0, "", 0, task_id));
+
+        //metrics
+        TextView metrics = (TextView) findViewById(R.id.metrics);
+        metrics.setText(milestoneList.size() + " todos, " + completedMilestone.size() + " completed");
+
+
+        Button gotoNotes = (Button) findViewById(R.id.gotonotes);
+
+
+
 
     }
 
@@ -95,10 +99,9 @@ public class TaskDetail extends AppCompatActivity {
 
         getMenuInflater().inflate(R.menu.task_detail_menu, menu);
         MenuItem item = (MenuItem) findViewById(R.id.completed_task_menu_option);
-
+        this.menu = menu;
         if (task_completed == 1) {
-            this.menu = menu;
-            menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_action_redo));
+            menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.ic_action_redo));
         }
         return true;
     }
@@ -117,6 +120,10 @@ public class TaskDetail extends AppCompatActivity {
 
         if (id == R.id.completed_task_menu_option) {
             onCompleteTask();
+        }
+
+        if (id == R.id.add_todo_menu_option){
+            onComingSoonFeature();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -148,13 +155,13 @@ public class TaskDetail extends AppCompatActivity {
         finish();
     }
 
-    private  void dataChanged() {
+    private static void dataChanged() {
         getAllMilestones.clear();
         getAllMilestones.addAll(taskListModel.getAllMilestone(new MilestoneController(0, "", 0, task_id)));
         adapter.notifyDataSetChanged();
 
         task_completed = 0;
-        menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_done_all));
+        menu.getItem(1).setIcon(R.drawable.ic_done_all);
     }
 
     public void redoCompletedTask() {
@@ -216,5 +223,27 @@ public class TaskDetail extends AppCompatActivity {
 
     }
 
+    public class TaskDetailInnerClass {
+
+        public void updateMilestoneList() {
+            TaskDetail.dataChanged();
+        }
+    }
+
+    public void  onComingSoonFeature(){
+        FragmentManager manager = getFragmentManager();
+        Fragment frag = manager.findFragmentByTag("fragment_edit_name");
+      //  manager.beginTransaction().remove(frag).commit();
+        EditMileStoneDialogFragment mileStoneDialogFragment = new EditMileStoneDialogFragment();
+        mileStoneDialogFragment.show(manager, "fragment_edit_name");
+    }
+
+    public void  onComingSoonFeatureView(View v){
+        FragmentManager manager = getFragmentManager();
+        Fragment frag = manager.findFragmentByTag("fragment_edit_name");
+        //  manager.beginTransaction().remove(frag).commit();
+        EditMileStoneDialogFragment mileStoneDialogFragment = new EditMileStoneDialogFragment();
+        mileStoneDialogFragment.show(manager, "fragment_edit_name");
+    }
 
 }
