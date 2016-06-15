@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/whitecolor"
-    android:padding="6dp">
+    android:layout_height="wrap_content">
 
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:id="@+id/textelements"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="60dp"
-        android:orientation="vertical"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:paddingLeft="15dp">
-
-        <TextView
-            android:id="@+id/tasktitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:textColor="@color/textColor"
-            android:textSize="16sp">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/task_descr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:textColor="@color/faintText"
-            android:textSize="12sp">
-
-        </TextView>
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/completedornot"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp" />
+        android:layout_marginTop="30dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:background="@color/whitecolor"
+            android:layout_height="160dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingLeft="15dp"
+            android:paddingStart="15dp">
+
+            <TextView
+                android:id="@+id/tasktitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:textColor="@color/textColor"
+                android:textSize="25sp">
+            </TextView>
+
+            <TextView
+                android:layout_below="@id/tasktitle"
+                android:id="@+id/task_descr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:textColor="@color/faintText"
+                android:textSize="14sp">
+
+            </TextView>
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/completedornot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 </LinearLayout>
 

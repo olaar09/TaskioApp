@@ -7,16 +7,15 @@ public class TaskListController {
     public int _taskId, _completed;
     public String _taskTitle, _taskDescr;
 
-    public TaskListController(int _taskId, String _taskTitle, String _taskDescr) {
+    public TaskListController(int _taskId, String _taskTitle) {
         this._taskId = _taskId;
         this._taskTitle = _taskTitle;
-        this._taskDescr = _taskDescr;
     }
 
-    public TaskListController(int _taskId, String _taskTitle, String _taskDescr,int _completed) {
+    public TaskListController(int _taskId, String _taskTitle,int _completed) {
         this._taskId = _taskId;
         this._taskTitle = _taskTitle;
-        this._taskDescr = _taskDescr;
+        this._taskDescr = "5 milestones , 5 completes";
         this._completed = _completed;
     }
 

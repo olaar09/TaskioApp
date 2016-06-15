@@ -1,44 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:paddingBottom="@dimen/activity_vertical_margin"
-android:paddingLeft="@dimen/activity_horizontal_margin"
-android:paddingRight="@dimen/activity_horizontal_margin"
-android:paddingTop="@dimen/activity_vertical_margin"
-app:layout_behavior="@string/appbar_scrolling_view_behavior"
-tools:context="taskio.taskio.co.taskio.AddTaskActivity"
-tools:showIn="@layout/activity_add_task">
-
-<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/whitecolor"
-    android:padding="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_height="match_parent"><!-- change this to wrap content when u start milestone so there can be margon abetween both layouts-->
-    <EditText
-        android:layout_marginTop="10dp"
-        android:id="@+id/detail_task_title"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="taskio.taskio.co.taskio.AddTaskActivity"
+    tools:showIn="@layout/activity_add_task">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/titlecardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@color/whitecolor"
+            android:padding="10dp"> <!-- change this to wrap content when u start milestone so there can be margon abetween both layouts-->
+
+
+            <TextView
+                android:id="@+id/detail_task_title"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:textSize="40dp" />
+
+            <TextView
+                android:layout_below="@id/detail_task_title"
+                android:id="@+id/metrics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/gotonotes"
+                android:text="Notes"
+                android:layout_alignRight="@id/detail_task_title"
+                android:layout_marginTop="15dp"
+                android:onClick="onComingSoonFeatureView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <ListView
+        android:id="@+id/milestonelistview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Task title"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/detail_task_descr"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/detail_task_title"
-        android:gravity="top|left"
-        android:hint="Task Description"
-        android:inputType="textMultiLine"
-        android:lines="10"
-        android:minLines="6"
-        android:scrollbars="vertical" />
-
-</RelativeLayout>
+        android:drawSelectorOnTop="true"
+        android:layout_below="@id/titlecardview"></ListView>
 
 </RelativeLayout>

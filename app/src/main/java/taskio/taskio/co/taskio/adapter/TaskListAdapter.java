@@ -11,7 +11,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import taskio.taskio.co.taskio.R;
+import taskio.taskio.co.taskio.controller.MilestoneController;
 import taskio.taskio.co.taskio.controller.TaskListController;
+import taskio.taskio.co.taskio.model.TaskListModel;
 
 /**
  * Created by olaar on 6/10/16.
@@ -47,10 +49,18 @@ public class TaskListAdapter extends ArrayAdapter<TaskListController> {
             tasklistView.setTag(viewHolder);
         }
 
+
         ViewHolder viewHolder = (ViewHolder) tasklistView.getTag();
         TaskListController taskListController = getItem(pos);
+
+        TaskListModel taskListModel = new TaskListModel(context);
+        List<MilestoneController> milestoneList  = taskListModel.getAllMilestone(new MilestoneController(0, "", 0, taskListController.get_taskId()));
+        List<MilestoneController> completedMilestone = taskListModel.getCompletedMilestones(new MilestoneController(0, "", 0, taskListController.get_taskId()));
+
         viewHolder.title.setText(taskListController.get_taskTitle());
-        viewHolder.descr.setText(taskListController.get_taskDescr());
+        viewHolder.descr.setText(milestoneList.size() + " Todos, "+ completedMilestone.size()+" Completed");
+
+
         if (taskListController.get_completed() == 1){
             viewHolder.completeOrNot.setImageResource(R.drawable.ic_check_circle_black);
         }else {
