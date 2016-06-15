@@ -118,20 +118,21 @@ public class TaskListModel extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean taskCompleted(TaskListController taskListController) {
+    public boolean taskCompleted(TaskListController taskListController,int completeOrNot , int onlyTask) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         ContentValues values = new ContentValues();
 
         // update tasklist table
-        values.put(DbContract.TaskListTable.TASK_COMPLETED_COL, 1);
+        values.put(DbContract.TaskListTable.TASK_COMPLETED_COL, completeOrNot);
         String[] arg = {"" + taskListController.get_taskId()};
         sqLiteDatabase.update(DbContract.TaskListTable.TABLE_NAME, values, "task_id = ? ", arg);
 
 
         // update milestone table
 
-        sqLiteDatabase.update(DbContract.TaskMilestoneTable.TABLE_NAME, values, "task_id = ? ", arg);
-
+        if (onlyTask == 0){
+            sqLiteDatabase.update(DbContract.TaskMilestoneTable.TABLE_NAME, values, "task_id = ? ", arg);
+        }
         return true;
     }
 

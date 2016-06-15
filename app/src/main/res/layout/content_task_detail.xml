@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:background="@color/whitecolor"
-            android:padding="10dp"><!-- change this to wrap content when u start milestone so there can be margon abetween both layouts-->
+            android:padding="10dp"> <!-- change this to wrap content when u start milestone so there can be margon abetween both layouts-->
 
 
             <TextView

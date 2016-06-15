@@ -1,6 +1,8 @@
 package taskio.taskio.co.taskio;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -25,6 +27,7 @@ import java.util.List;
 import taskio.taskio.co.taskio.adapter.MilestoneListAdapter;
 import taskio.taskio.co.taskio.controller.MilestoneController;
 import taskio.taskio.co.taskio.controller.TaskListController;
+import taskio.taskio.co.taskio.fragment.EditMileStoneDialogFragment;
 import taskio.taskio.co.taskio.model.TaskListModel;
 
 public class TaskDetail extends AppCompatActivity {
@@ -69,7 +72,7 @@ public class TaskDetail extends AppCompatActivity {
         milestoneListview = (ListView) findViewById(R.id.milestonelistview);
         taskListModel = new TaskListModel(this);
         getAllMilestones = taskListModel.getAllMilestone(new MilestoneController(0, "", 0, task_id));
-        adapter = new MilestoneListAdapter(TaskDetail.this, getAllMilestones,task_id,task_completed);
+        adapter = new MilestoneListAdapter(TaskDetail.this, getAllMilestones, task_id, task_completed, new CustomDialogFrafment());
         milestoneListview.setAdapter(adapter);
         milestoneListview.setItemsCanFocus(true);
         milestoneListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -140,7 +143,7 @@ public class TaskDetail extends AppCompatActivity {
     public void taskComplete() {
         TaskListModel model = new TaskListModel(this);
         TaskListController taskListController = new TaskListController(getIntent().getIntExtra(MainActivity.TASK_ID_PUT, -1), "");
-        model.taskCompleted(taskListController);
+        model.taskCompleted(taskListController,1,0);
         setResult(MainActivity.EDIT_TASK_OK);
         finish();
     }
@@ -212,6 +215,22 @@ public class TaskDetail extends AppCompatActivity {
         alertDialog.show();
 
     }
+
+    public class CustomDialogFrafment{
+
+        public boolean onEditMileStone() {
+            FragmentManager fm = getFragmentManager();
+            Fragment frag = fm.findFragmentByTag("fragment_edit_name");
+            if (frag != null) {
+                fm.beginTransaction().remove(frag).commit();
+            }
+
+            EditMileStoneDialogFragment edm = new EditMileStoneDialogFragment();
+            edm.show(fm,"fragment_edit_name");
+            return true;
+        }
+    }
+
 
 
 }

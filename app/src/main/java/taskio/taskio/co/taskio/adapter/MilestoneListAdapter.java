@@ -1,5 +1,6 @@
 package taskio.taskio.co.taskio.adapter;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.v7.widget.CardView;
@@ -34,13 +35,15 @@ public class MilestoneListAdapter extends ArrayAdapter<MilestoneController> {
     private static int taskId;
     private static int taskCompleted;
     private static TaskListModel taskListModel;
+    private TaskDetail.CustomDialogFrafment onEdit;
 
-    public MilestoneListAdapter(Context c, List<MilestoneController> milestoneList, int taskId, int taskCompleted) {
+    public MilestoneListAdapter(Context c, List<MilestoneController> milestoneList, int taskId, int taskCompleted, TaskDetail.CustomDialogFrafment onEdit) {
         super(c, 0, milestoneList);
         this.context = c;
         this.taskId = taskId;
         this.taskCompleted = taskCompleted;
         taskListModel = new TaskListModel(context);
+        this.onEdit = onEdit;
     }
 
     public class ViewHolder {
@@ -85,19 +88,20 @@ public class MilestoneListAdapter extends ArrayAdapter<MilestoneController> {
                 CheckBox checkBox = (CheckBox) v;
 
                 if (checkBox.isChecked()) {
-
                     taskListModel.mileStoneCompleted((int) checkBox.getTag(), 1);
-
                     int allMileStonesize = taskListModel.getAllMilestone(new MilestoneController(0, null, 0, taskId)).size();
                     int allCompletedMilestoneSize = taskListModel.getCompletedMilestones(new MilestoneController(0, null, 0, taskId)).size();
+
                     if (allCompletedMilestoneSize > 0 && allMileStonesize > 0 && allMileStonesize == allCompletedMilestoneSize) {
-                        taskListModel.taskCompleted(new TaskListController(taskId, null, 0));
+                        taskListModel.taskCompleted(new TaskListController(taskId, null, 0),1,0);
                         // Log.d("ddd=>", "dd" + taskId);
                     }
                     checkBox.setPaintFlags(checkBox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
                 } else {
+
                     taskListModel.mileStoneCompleted((int) checkBox.getTag(), 0);
+                    taskListModel.taskCompleted(new TaskListController(taskId, null, 0), 0, 1);
                     checkBox.setPaintFlags(0);
                 }
             }
@@ -107,6 +111,11 @@ public class MilestoneListAdapter extends ArrayAdapter<MilestoneController> {
             @Override
             public boolean onLongClick(View v) {
                 CheckBox checkBox = (CheckBox) v;
+                //FragmentManager fragmentManager
+                //boolean d = onEdit;
+                //taskDetail.onEditMileStone();
+                onEdit.onEditMileStone();
+
                 if (checkBox.isChecked()) {
                     Log.d("Longpressed => ", "CHECKED");
                 } else {
