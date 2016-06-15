@@ -6,7 +6,7 @@ package taskio.taskio.co.taskio.contract;
 public class DbContract {
 
     public static final String DBNAME = "co.simplyio.taskio";
-    public static final int dbVersion = 1;
+    public static final int dbVersion = 2;
     public static final String CREATED_AT = "created_at";
     public static final String UPDATED_AT = "updated_at";
 

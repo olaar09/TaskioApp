@@ -211,4 +211,11 @@ public class TaskListModel extends SQLiteOpenHelper {
         return getCompletedTaskMileStones;
     }
 
+
+    public boolean deleteMileStone(MilestoneController milestoneController) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        String[] arg = {"" + milestoneController.get_mileStoneId()};
+        sqLiteDatabase.delete(DbContract.TaskMilestoneTable.TABLE_NAME, " task_milestone_id = ? ", arg);
+        return true;
+    }
 }

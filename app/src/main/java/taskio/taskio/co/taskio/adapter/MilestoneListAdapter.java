@@ -1,7 +1,9 @@
 package taskio.taskio.co.taskio.adapter;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Paint;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -35,15 +38,15 @@ public class MilestoneListAdapter extends ArrayAdapter<MilestoneController> {
     private static int taskId;
     private static int taskCompleted;
     private static TaskListModel taskListModel;
-    private TaskDetail.CustomDialogFrafment onEdit;
+    private CheckBox longPressCheckBox;
 
-    public MilestoneListAdapter(Context c, List<MilestoneController> milestoneList, int taskId, int taskCompleted, TaskDetail.CustomDialogFrafment onEdit) {
+
+    public MilestoneListAdapter(Context c, List<MilestoneController> milestoneList, int taskId, int taskCompleted) {
         super(c, 0, milestoneList);
         this.context = c;
         this.taskId = taskId;
         this.taskCompleted = taskCompleted;
         taskListModel = new TaskListModel(context);
-        this.onEdit = onEdit;
     }
 
     public class ViewHolder {
@@ -93,7 +96,7 @@ public class MilestoneListAdapter extends ArrayAdapter<MilestoneController> {
                     int allCompletedMilestoneSize = taskListModel.getCompletedMilestones(new MilestoneController(0, null, 0, taskId)).size();
 
                     if (allCompletedMilestoneSize > 0 && allMileStonesize > 0 && allMileStonesize == allCompletedMilestoneSize) {
-                        taskListModel.taskCompleted(new TaskListController(taskId, null, 0),1,0);
+                        taskListModel.taskCompleted(new TaskListController(taskId, null, 0), 1, 0);
                         // Log.d("ddd=>", "dd" + taskId);
                     }
                     checkBox.setPaintFlags(checkBox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -110,18 +113,29 @@ public class MilestoneListAdapter extends ArrayAdapter<MilestoneController> {
         viewholder.checkBox.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                CheckBox checkBox = (CheckBox) v;
-                //FragmentManager fragmentManager
-                //boolean d = onEdit;
-                //taskDetail.onEditMileStone();
-                onEdit.onEditMileStone();
+                longPressCheckBox = (CheckBox) v;
 
-                if (checkBox.isChecked()) {
-                    Log.d("Longpressed => ", "CHECKED");
-                } else {
-                    Log.d("Longpressed => ", "Not CHECKED");
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Do you want to delete this todo ?");
 
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        taskListModel.deleteMileStone(new MilestoneController((int)longPressCheckBox.getTag(),"",0,0));
+
+                         Log.d("Inside =>", "" + longPressCheckBox.getTag())   ;
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
                 return true;
             }
         });

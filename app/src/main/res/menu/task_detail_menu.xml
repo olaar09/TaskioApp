@@ -2,6 +2,14 @@
 <menu  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".TaskDetail">
+
+    <item android:icon="@drawable/ic_add_white"
+        android:title="Edit task"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="99"
+        android:id="@+id/add_todo_menu_option">
+    </item>
+
     <item
         android:title="Delete Task"
         android:orderInCategory="101"
@@ -16,5 +24,7 @@
         android:orderInCategory="100"
         android:id="@+id/completed_task_menu_option">
     </item>
+
+
 
 </menu>
